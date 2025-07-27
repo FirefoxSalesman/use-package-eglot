@@ -28,15 +28,20 @@
 ;;
 ;; Example usage:
 ;;
-;;     (use-package mlir-mode
-;;       :eglot "mlir-lsp-server")
+;;     (use-package swift-mode
+;;       :eglot "sourcekit-lsp")
 ;;
-;;     (use-package typst-ts-mode
-;;       :eglot typst-ts-lsp-download-path)
+;;     (use-package tablegen-mode
+;;       :eglot '(tablegen-mode "tblgen-lsp-server"))
 ;;
 ;;     (use-package css-mode
-;;       :eglot `((css-mode css-ts-mode)
-;;                "vscode-css-language-server" "--stdio"))
+;;       :eglot ("vscode-css-language-server" "--stdio"))
+;;
+;;     (use-package typst-ts-mode
+;;       :eglot (lambda (_interactive _project)
+;;                (unless (file-executable-p typst-ts-lsp-download-path)
+;;                  (typst-ts-lsp-download-binary))
+;;                (list typst-ts-lsp-download-path)))
 
 
 ;;; Code:
@@ -53,19 +58,19 @@ For the form of MAJOR-MODE and CONTACT, see `eglot-server-programs'."
        ((stringp arg)
         `'(,(use-package-as-mode name-symbol) ,arg))
        
-       ((or (functionp arg) (symbolp arg))
+       ((functionp arg)
         `(cons ',(use-package-as-mode name-symbol) ,arg))
        
-       ((consp arg)
-        (if (stringp (car arg))
-            `'(,(use-package-as-mode name-symbol) . ,arg)
-          (list 'quote arg)))
-       (t
+       ((and (consp arg) (stringp (car arg)))
+        `'(,(use-package-as-mode name-symbol) . ,arg))
+       ((null arg)
         (use-package-error
-         (concat label " wants a string, list of strings, function, or a (MAJOR-MODES . CONTACT) form.")))))))
+         (concat label " wants a string, list of strings, function, or a (MAJOR-MODES . CONTACT) form.")))
+       (t arg)))))
 
 
 (defun use-package-handler/:eglot (name-symbol keyword arg rest state)
+  "Generate handler code for the use-package `:eglot' keyword."
   (let ((body (use-package-process-keywords name-symbol rest state)))
     (use-package-concat
      body
