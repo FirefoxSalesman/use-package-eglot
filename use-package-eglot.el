@@ -5,6 +5,7 @@
 ;; Author: Aidan Hall <aidan.hall202@gmail.com>
 ;; Keywords: languages, convenience, config
 ;; Package-Requires: (eglot use-package)
+;; URL: https://gitlab.com/aidanhall/use-package-eglot
 ;; Version: 0.0.1
 
 ;; This program is free software; you can redistribute it and/or modify
