@@ -23,8 +23,8 @@
 ;;; Commentary:
 
 ;; This file sets up the `:eglot' use-package keyword, that provides a
-;; convenient way to set up an LSP server program to use when one is
-;; not specified by default, or by a major mode package.
+;; convenient way to set up an LSP server program to use with `eglot'
+;; when one is not specified by default, or by a major mode package.
 ;;
 ;; Example usage:
 ;;
