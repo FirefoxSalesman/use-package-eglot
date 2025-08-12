@@ -1,4 +1,5 @@
 # `(use-package :eglot)`
+This is a fork of https://gitlab.com/aidanhall/use-package-eglot
 
 Registering an LSP server with eglot typically requires the following modest boilerplate:
 
