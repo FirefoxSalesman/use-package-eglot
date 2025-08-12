@@ -48,7 +48,6 @@
 ;;; Code:
 
 (require 'use-package)
-(require 'eglot)
 
 (defun use-package-normalize/:eglot (name-symbol keyword args)
   "Turn ARGS into a pair of the form (MAJOR-MODE . CONTACT).
